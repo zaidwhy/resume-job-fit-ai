@@ -11,6 +11,7 @@ from secrets_bridge import load_secrets_into_env
 load_secrets_into_env(("GEMINI_API_KEY", "GOOGLE_API_KEY"))
 
 from analyzer import AnalyzerError, JobComparison, compare_jobs
+from ui_colors import score_color
 
 st.set_page_config(page_title="Compare Jobs - Resume Job-Fit AI", page_icon="⚖️", layout="wide")
 
@@ -44,16 +45,6 @@ def extract_pdf_text(uploaded_file) -> str:
     import pdfplumber
     with pdfplumber.open(io.BytesIO(uploaded_file.read())) as pdf:
         return "\n".join(page.extract_text() or "" for page in pdf.pages).strip()
-
-
-# --- Score colour ------------------------------------------------------------
-
-def score_color(score: int) -> str:
-    if score >= 75:
-        return "#16a34a"
-    if score >= 50:
-        return "#d97706"
-    return "#dc2626"
 
 
 # --- Inputs ------------------------------------------------------------------
