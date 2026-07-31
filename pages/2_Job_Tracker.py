@@ -16,6 +16,7 @@ from db import (
     update_notes,
     update_status,
 )
+from ui_colors import score_color
 
 st.set_page_config(page_title="Job Tracker - Resume Job-Fit AI", page_icon="📋", layout="wide")
 
@@ -151,7 +152,7 @@ else:
 
         for app in apps:
             score = app["score"]
-            color = "#16a34a" if score >= 75 else "#d97706" if score >= 50 else "#dc2626"
+            color = score_color(score)
 
             with st.container(border=True):
                 head, score_col = st.columns([6, 1])

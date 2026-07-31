@@ -22,6 +22,7 @@ from analyzer import (
     generate_linkedin_profile, generate_skills_roadmap, research_company,
 )
 from db import save_application
+from ui_colors import score_color
 
 SAMPLE_DIR = Path(__file__).parent / "sample"
 
@@ -41,14 +42,6 @@ def extract_pdf_text(uploaded_file) -> str:
     import pdfplumber
     with pdfplumber.open(io.BytesIO(uploaded_file.read())) as pdf:
         return "\n".join(page.extract_text() or "" for page in pdf.pages).strip()
-
-
-def score_color(score: int) -> str:
-    if score >= 75:
-        return "#16a34a"
-    if score >= 50:
-        return "#d97706"
-    return "#dc2626"
 
 
 def chips(items: list[str], bg: str, fg: str) -> None:
