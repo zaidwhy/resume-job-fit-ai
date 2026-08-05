@@ -16,3 +16,6 @@ __pycache__/
 .vscode/
 .idea/
 graphify-out/
+
+# Regeneratable brag/hyperframes trailer output
+brag-output/
