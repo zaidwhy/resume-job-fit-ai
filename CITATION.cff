@@ -4,10 +4,12 @@ title: "Resume Job-Fit AI"
 authors:
   - family-names: "Syed"
     given-names: "Zaid Ali"
+    orcid: "https://orcid.org/0009-0003-4313-1510"
 date-released: 2026-06-15
 url: "https://github.com/zaidwhy/resume-job-fit-ai"
 repository-code: "https://github.com/zaidwhy/resume-job-fit-ai"
 license: MIT
 abstract: >
   AI tool that scores a resume against a job description and suggests
-  tailored, truthful rewrites. Built with Claude Sonnet 4.6 + Streamlit.
+  tailored, truthful rewrites, with structured output validation and
+  an offline test suite.
