@@ -164,5 +164,5 @@ if st.session_state.cmp_result:
         "Back to the main analyzer → use the sidebar · "
         "Built in public by Zaid Ali Syed "
         "· [Live demo](https://resume-job-fit-ai.streamlit.app) "
-        "· [GitHub](https://github.com/syzayd/resume-job-fit-ai)"
+        "· [GitHub](https://github.com/zaidwhy/resume-job-fit-ai)"
     )

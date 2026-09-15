@@ -7,7 +7,7 @@ Built to answer a real question every applicant has: *"How well does my resume a
 **🔗 [Try it live → resume-job-fit-ai.streamlit.app](https://resume-job-fit-ai.streamlit.app)**
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://resume-job-fit-ai.streamlit.app)
-[![CI](https://github.com/syzayd/resume-job-fit-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/syzayd/resume-job-fit-ai/actions/workflows/ci.yml)
+[![CI](https://github.com/zaidwhy/resume-job-fit-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/zaidwhy/resume-job-fit-ai/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.14-blue)
 
 ![Resume Job-Fit AI - a real scoring run: paste a JD + resume, get a fit score, salary range, and keyword gaps](docs/demo-scoring.gif)
@@ -57,7 +57,7 @@ Built to answer a real question every applicant has: *"How well does my resume a
 ## Run it in 60 seconds
 
 ```bash
-git clone https://github.com/syzayd/resume-job-fit-ai.git
+git clone https://github.com/zaidwhy/resume-job-fit-ai.git
 cd resume-job-fit-ai
 
 python -m venv venv
