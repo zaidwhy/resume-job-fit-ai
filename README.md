@@ -164,5 +164,5 @@ resume-job-fit-ai/
 
 ---
 
-*Built in public by **Zaid Ali Syed** · [github.com/syzayd](https://github.com/syzayd)*
+*Built in public by **Zaid Ali Syed** · [github.com/zaidwhy](https://github.com/zaidwhy)*
 *Rewrites stay truthful to your resume - review before using.*
