@@ -22,6 +22,7 @@ from analyzer import (
     generate_linkedin_profile, generate_skills_roadmap, research_company,
 )
 from db import save_application
+from session_owner import current_owner
 from ui_colors import score_color
 
 SAMPLE_DIR = Path(__file__).parent / "sample"
@@ -852,6 +853,7 @@ if st.session_state.result:
                     st.warning("Enter a job title to save.")
                 else:
                     save_application(
+                        owner=current_owner(),
                         job_title=_job_title,
                         score=result.score,
                         company=_company,

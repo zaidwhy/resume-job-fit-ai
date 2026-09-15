@@ -16,7 +16,10 @@ from db import (
     update_notes,
     update_status,
 )
+from session_owner import current_owner
 from ui_colors import score_color
+
+OWNER = current_owner()
 
 st.set_page_config(page_title="Job Tracker - Resume Job-Fit AI", page_icon="📋", layout="wide")
 
@@ -25,7 +28,7 @@ st.caption("Every analysis you save lands here. Track status, take notes, export
 
 # --- Summary stats -----------------------------------------------------------
 
-stats = get_stats()
+stats = get_stats(OWNER)
 
 if stats["total"] == 0:
     st.info(
@@ -41,7 +44,7 @@ else:
     col_offer.metric("Offers", stats["by_status"].get("Offer", 0))
 
     # Score trend chart - shown when 3+ entries exist
-    history = get_score_history()
+    history = get_score_history(OWNER)
     if len(history) >= 3:
         import altair as alt
         import pandas as pd
@@ -67,7 +70,7 @@ else:
         st.caption(f"Save {3 - stats['total']} more application{'s' if 3 - stats['total'] != 1 else ''} to see your score trend chart.")
 
     # --- Analytics expander --------------------------------------------------
-    all_apps = get_all_applications()
+    all_apps = get_all_applications(OWNER)
 
     with st.expander("📊 Analytics", expanded=False):
         import altair as alt
@@ -179,7 +182,7 @@ else:
                         label_visibility="collapsed",
                     )
                     if new_status != app["status"]:
-                        update_status(app["id"], new_status)
+                        update_status(OWNER, app["id"], new_status)
                         st.rerun()
 
                 with note_col:
@@ -191,19 +194,19 @@ else:
                         label_visibility="collapsed",
                     )
                     if new_notes != app["notes"]:
-                        update_notes(app["id"], new_notes)
+                        update_notes(OWNER, app["id"], new_notes)
                         st.rerun()
 
                 with del_col:
                     if st.button("🗑️", key=f"del_{app['id']}", help="Delete this entry"):
-                        delete_application(app["id"])
+                        delete_application(OWNER, app["id"])
                         st.rerun()
 
     # --- Export --------------------------------------------------------------
     st.divider()
     st.download_button(
         label="Export all as CSV",
-        data=export_csv(),
+        data=export_csv(OWNER),
         file_name="job_applications.csv",
         mime="text/csv",
     )
