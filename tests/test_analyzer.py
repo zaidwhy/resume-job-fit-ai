@@ -1,4 +1,4 @@
-"""Unit tests for analyzer.py — all Gemini calls are mocked."""
+"""Unit tests for analyzer.py - all Gemini calls are mocked."""
 
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ from analyzer import (
 # ---------------------------------------------------------------------------
 
 RESUME = "Software engineer with 3 years Python experience, built REST APIs."
-JOB = "Senior Python Engineer — FastAPI, PostgreSQL, AWS required."
+JOB = "Senior Python Engineer - FastAPI, PostgreSQL, AWS required."
 
 
 def _make_response(parsed_obj):
@@ -247,7 +247,7 @@ class TestGenerateLinkedInProfile:
 # ---------------------------------------------------------------------------
 
 class TestCompareJobs:
-    JOB2 = "Data Scientist — Python, pandas, ML required."
+    JOB2 = "Data Scientist - Python, pandas, ML required."
 
     @patch("analyzer._client")
     @patch("analyzer._generate")
@@ -295,7 +295,7 @@ class TestCompareJobs:
                 apply_order=[1, 2, 3],
             )
             mock_gen.return_value = _make_response(comparison)
-            result = compare_jobs(RESUME, [JOB, self.JOB2, JOB, JOB])  # 4 jobs — should cap at 3
+            result = compare_jobs(RESUME, [JOB, self.JOB2, JOB, JOB])  # 4 jobs - should cap at 3
             assert isinstance(result, JobComparison)
             # Verify _generate was called (meaning it didn't raise before getting there)
             mock_gen.assert_called_once()
@@ -311,10 +311,10 @@ class TestResearchCompany:
     def test_returns_company_profile(self, mock_gen, mock_client):
         profile = CompanyProfile(
             culture_summary="Strong engineering culture, data-driven, high ownership.",
-            work_style="Hybrid — 3 days in office, 2 remote.",
+            work_style="Hybrid - 3 days in office, 2 remote.",
             typical_interview_format="4 rounds: recruiter screen, technical coding, system design, behavioral.",
             what_they_value=["Ownership", "Technical depth", "Clear communication", "Bias for action"],
-            red_flags=["High performance bar — demanding environment.", "Promotion can be slow."],
+            red_flags=["High performance bar - demanding environment.", "Promotion can be slow."],
             prep_tips=[
                 "Prepare STAR answers for behavioral questions.",
                 "Review distributed systems design basics.",
@@ -324,7 +324,7 @@ class TestResearchCompany:
         mock_gen.return_value = _make_response(profile)
         result = research_company("Google", "Senior Software Engineer")
         assert isinstance(result, CompanyProfile)
-        assert result.work_style == "Hybrid — 3 days in office, 2 remote."
+        assert result.work_style == "Hybrid - 3 days in office, 2 remote."
         assert len(result.what_they_value) == 4
 
     @patch("analyzer._client")

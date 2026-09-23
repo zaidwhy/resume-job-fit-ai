@@ -1,4 +1,4 @@
-# Handoff: Upgrade Plan Session — 2026-06-17
+# Handoff: Upgrade Plan Session - 2026-06-17
 
 ## ✅ Progress as of 2026-06-17 (same session, continued)
 
@@ -11,7 +11,7 @@
 | `26e4b24` | 2B Analytics Dashboard + 3B Email Templates |
 | `(current)` | 2D Resume Health Tab |
 
-**App is now:** 3-page Streamlit app — Main (**7 tabs**) + Compare Jobs + Job Tracker
+**App is now:** 3-page Streamlit app - Main (**7 tabs**) + Compare Jobs + Job Tracker
 
 **Remaining from plan:** 3A Company Research Page, 3C Tailored Resume Export
 
@@ -26,13 +26,13 @@ to take the app from "feature-complete MVP" to "flagship portfolio project".
 **App state entering this session:**
 - Live at https://resume-job-fit-ai.streamlit.app
 - 3-page Streamlit app: Main (5 tabs) + Compare Jobs + Job Tracker
-- 26 unit tests, CI passing, SQLite tracker, DOCX export — all shipped
+- 26 unit tests, CI passing, SQLite tracker, DOCX export - all shipped
 
 ---
 
 ## Full Upgrade Roadmap
 
-### Phase 1 — Quick Wins (Start Here)
+### Phase 1 - Quick Wins (Start Here)
 
 #### 1A. Salary Range Estimator
 **Effort: ~45 min | Files: `analyzer.py`, `app.py`**
@@ -41,7 +41,7 @@ to take the app from "feature-complete MVP" to "flagship portfolio project".
 - Update `_ANALYSIS_SYSTEM` prompt to ask Gemini to estimate salary based on role/JD context.
 - Render as an info box in the Analysis tab below the score.
 - Include in `.txt` and `.docx` exports (`analysis_as_text()` and `export_docx()`).
-- No new AI call — Gemini already sees the full JD; this is one new field.
+- No new AI call - Gemini already sees the full JD; this is one new field.
 
 #### 1B. Score Trend Chart in Job Tracker
 **Effort: ~1 hr | Files: `db.py`, `pages/2_Job_Tracker.py`**
@@ -57,11 +57,11 @@ to take the app from "feature-complete MVP" to "flagship portfolio project".
 - Add "Try with sample data →" button above the two input columns.
 - On click: read `sample/sample_resume.txt` and `sample/sample_job.txt` (already in repo),
   populate session state text areas, clear any previous results, call `st.rerun()`.
-- Critical for demos and first-time visitors — eliminates all friction.
+- Critical for demos and first-time visitors - eliminates all friction.
 
 ---
 
-### Phase 2 — Core Feature Depth
+### Phase 2 - Core Feature Depth
 
 #### 2A. Resume Diff Viewer (Accept/Reject Rewrites)
 **Effort: ~1 hr | Files: `app.py`**
@@ -71,7 +71,7 @@ to take the app from "feature-complete MVP" to "flagship portfolio project".
   - Right column: AI rewrite (green left-border highlight)
 - Add "Copy" button per rewrite (reuse `st.code()` pattern already in app).
 - Add "Copy All Rewrites" button that assembles all rewrites into one block.
-- No new AI calls — works entirely from existing `Analysis.bullet_rewrites`.
+- No new AI calls - works entirely from existing `Analysis.bullet_rewrites`.
 
 #### 2B. Application Analytics Dashboard
 **Effort: ~1.5 hr | Files: `pages/2_Job_Tracker.py`**
@@ -79,7 +79,7 @@ to take the app from "feature-complete MVP" to "flagship portfolio project".
 - Add `st.expander("📊 Analytics", expanded=False)` above the application cards.
 - Inside: pipeline funnel (Saved → Applied → Interviewing → Offer counts as horizontal bars),
   score distribution histogram, success rate percentage.
-- All data comes from existing `get_stats()` return value — no db.py changes needed.
+- All data comes from existing `get_stats()` return value - no db.py changes needed.
 
 #### 2C. Cover Letter Tone Selector
 **Effort: ~1 hr | Files: `analyzer.py`, `app.py`**
@@ -111,7 +111,7 @@ to take the app from "feature-complete MVP" to "flagship portfolio project".
 
 ---
 
-### Phase 3 — New Pages / Big Features
+### Phase 3 - New Pages / Big Features
 
 #### 3A. Company Research Page
 **Effort: ~2.5 hr | Files: `analyzer.py`, `pages/3_Company_Research.py` (new)**
@@ -151,7 +151,7 @@ to take the app from "feature-complete MVP" to "flagship portfolio project".
 - Assembles a ready-to-submit resume `.docx` by substituting AI rewrites in place of original bullets.
 - Sections: Contact Placeholder → Summary (from ATS tips) → Work Experience (with rewrites) → Skills Gap addressed.
 - Add "Download Tailored Resume (.docx)" as a third download button alongside existing two.
-- No new AI calls — remixes existing `Analysis` data.
+- No new AI calls - remixes existing `Analysis` data.
 
 ---
 
@@ -159,27 +159,27 @@ to take the app from "feature-complete MVP" to "flagship portfolio project".
 
 | # | Feature | Status |
 |---|---|---|
-| 1 | 1C — Load Sample Data | ✅ Was already shipped |
-| 2 | 1A — Salary Range Estimator | ✅ Done (`f4ee7f6`) |
-| 3 | 2A — Diff Viewer (Rewrites) | ✅ Done (`f4ee7f6`) |
-| 4 | 1B — Score Trend Chart | ✅ Done (`b0c3121`) |
-| 5 | 2C — Cover Letter Tone | ✅ Done (`b0c3121`) |
-| 6 | 2B — Analytics Dashboard | ✅ Done (`26e4b24`) |
-| 7 | 3B — Email Templates | ✅ Done (`26e4b24`) |
-| 8 | 2D — Resume Health Tab | ✅ Done (current session) |
-| 9 | 3C — Tailored Resume Export | ⬜ Next |
-| 10 | 3A — Company Research Page | ⬜ Next |
+| 1 | 1C - Load Sample Data | ✅ Was already shipped |
+| 2 | 1A - Salary Range Estimator | ✅ Done (`f4ee7f6`) |
+| 3 | 2A - Diff Viewer (Rewrites) | ✅ Done (`f4ee7f6`) |
+| 4 | 1B - Score Trend Chart | ✅ Done (`b0c3121`) |
+| 5 | 2C - Cover Letter Tone | ✅ Done (`b0c3121`) |
+| 6 | 2B - Analytics Dashboard | ✅ Done (`26e4b24`) |
+| 7 | 3B - Email Templates | ✅ Done (`26e4b24`) |
+| 8 | 2D - Resume Health Tab | ✅ Done (current session) |
+| 9 | 3C - Tailored Resume Export | ⬜ Next |
+| 10 | 3A - Company Research Page | ⬜ Next |
 
 ---
 
 ## Key Technical Constraints (Always Respect)
 
-- **Free tier only** — `gemini-2.5-flash-lite` for all calls; no paid services.
-- **UI-agnostic core** — all new AI schemas + functions go in `analyzer.py` (no Streamlit imports there).
-- **Test every new analyzer function** — mock `_generate` with `@patch("analyzer._generate")`, match pattern in `tests/test_analyzer.py`.
-- **Auto-commit hooks fire on saves** — `git reset --soft HEAD~N` before every proper commit.
-- **Input limits** — 8000 char per input; `_validate()` enforces this.
-- **XSS** — wrap all Gemini-generated strings in `html.escape()` before `unsafe_allow_html=True`.
+- **Free tier only** - `gemini-2.5-flash-lite` for all calls; no paid services.
+- **UI-agnostic core** - all new AI schemas + functions go in `analyzer.py` (no Streamlit imports there).
+- **Test every new analyzer function** - mock `_generate` with `@patch("analyzer._generate")`, match pattern in `tests/test_analyzer.py`.
+- **Auto-commit hooks fire on saves** - `git reset --soft HEAD~N` before every proper commit.
+- **Input limits** - 8000 char per input; `_validate()` enforces this.
+- **XSS** - wrap all Gemini-generated strings in `html.escape()` before `unsafe_allow_html=True`.
 
 ## How to Run Locally
 

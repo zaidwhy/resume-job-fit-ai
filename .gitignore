@@ -1,8 +1,8 @@
-# Secrets — never commit
+# Secrets - never commit
 .env
 .streamlit/secrets.toml
 
-# SQLite database — user data, not for version control
+# SQLite database - user data, not for version control
 job_tracker.db
 
 # Python
