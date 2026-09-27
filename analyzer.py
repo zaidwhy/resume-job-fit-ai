@@ -9,6 +9,7 @@ Uses Gemini's free tier (no credit card needed).
 from __future__ import annotations
 
 import json
+import logging
 import os
 import time
 from typing import List, NoReturn
@@ -18,6 +19,9 @@ from google import genai
 from google.genai import errors as genai_errors
 from google.genai import types
 from pydantic import BaseModel, Field
+
+# Server-side record of every model call: schema, attempt, latency, outcome. Never the resume or job text.
+log = logging.getLogger("resume_job_fit_ai.analyzer")
 
 load_dotenv()
 
@@ -382,7 +386,9 @@ def _client() -> genai.Client:
 def _generate(client: genai.Client, prompt: str, system: str, schema) -> object:
     """Call Gemini with structured output and auto-retry on transient 5xx / 429s."""
     last_err: Exception | None = None
+    name = getattr(schema, "__name__", str(schema))
     for attempt in range(_MAX_RETRIES):
+        started = time.perf_counter()
         try:
             response = client.models.generate_content(
                 model=MODEL,
@@ -394,14 +400,17 @@ def _generate(client: genai.Client, prompt: str, system: str, schema) -> object:
                     temperature=0.3,
                 ),
             )
+            log.info("gemini ok schema=%s attempt=%d ms=%d", name, attempt + 1, (time.perf_counter() - started) * 1000)
             return response
         except genai_errors.ClientError as exc:
             if getattr(exc, "code", None) != 429:
                 raise  # non-429 client errors are not transient
+            log.warning("gemini 429 schema=%s attempt=%d, retrying", name, attempt + 1)
             last_err = exc
             if attempt < _MAX_RETRIES - 1:
                 time.sleep(4 * (attempt + 1))  # 4s, 8s before final attempt
         except genai_errors.ServerError as exc:
+            log.warning("gemini %s schema=%s attempt=%d, retrying", getattr(exc, "code", "5xx"), name, attempt + 1)
             last_err = exc
             if attempt < _MAX_RETRIES - 1:
                 time.sleep(4 * (attempt + 1))
@@ -410,6 +419,8 @@ def _generate(client: genai.Client, prompt: str, system: str, schema) -> object:
 
 def _handle_api_error(exc: Exception) -> NoReturn:
     """Translate SDK exceptions into user-friendly AnalyzerErrors."""
+    # the visitor sees a friendly message; the log keeps the real cause
+    log.error("gemini failed: %s code=%s %s", type(exc).__name__, getattr(exc, "code", None), getattr(exc, "message", exc))
     if isinstance(exc, genai_errors.ClientError):
         msg = str(getattr(exc, "message", "") or exc).lower()
         code = getattr(exc, "code", None)
@@ -428,6 +439,7 @@ def _handle_api_error(exc: Exception) -> NoReturn:
 
 def _parse_from_text(text: str | None, schema: type) -> object:
     """Defensive fallback: extract the first JSON object from raw text."""
+    log.warning("structured output missing, parsing %s from raw text", getattr(schema, "__name__", schema))
     if not text:
         raise AnalyzerError("The model returned an empty response. Please try again.")
     start, end = text.find("{"), text.rfind("}")

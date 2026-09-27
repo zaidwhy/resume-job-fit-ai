@@ -5,11 +5,15 @@ Run: streamlit run app.py
 
 import html as _html
 import io
+import logging
 from pathlib import Path
 
 import streamlit as st
 
 from secrets_bridge import load_secrets_into_env
+
+# One stdout handler (Streamlit Cloud collects stdout). basicConfig is a no-op on reruns.
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
 # Streamlit Community Cloud stores secrets in st.secrets, not env vars.
 # Inject them into os.environ so analyzer.py's os.environ.get() calls work on Cloud.

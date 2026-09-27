@@ -349,3 +349,23 @@ class TestResearchCompany:
     def test_raises_on_whitespace_company_name(self):
         with pytest.raises(AnalyzerError, match="company name"):
             research_company("   ")
+
+
+class TestLogging:
+    """The server log records each model call and the real cause of a failure, never the inputs."""
+
+    def test_successful_call_is_logged_without_the_prompt(self, caplog):
+        from unittest.mock import MagicMock
+
+        client = MagicMock()
+        client.models.generate_content.return_value = MagicMock()
+        with caplog.at_level("INFO", logger="resume_job_fit_ai.analyzer"):
+            analyzer._generate(client, "SECRET RESUME TEXT", "system", analyzer.Analysis)
+        assert "gemini ok schema=Analysis attempt=1" in caplog.text
+        assert "SECRET RESUME TEXT" not in caplog.text
+
+    def test_api_failure_logs_the_real_cause(self, caplog):
+        with caplog.at_level("ERROR", logger="resume_job_fit_ai.analyzer"):
+            with pytest.raises(analyzer.AnalyzerError):
+                analyzer._handle_api_error(RuntimeError("socket closed"))
+        assert "RuntimeError" in caplog.text and "socket closed" in caplog.text

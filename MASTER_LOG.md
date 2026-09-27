@@ -410,3 +410,9 @@ README.md                               # Full feature table, live demo link, ba
 
 - Em dash purge: 291 occurrences replaced with " - " across 12 tracked files (docs, handoffs, logs, .gitignore comments, test strings).
 - Verified after: pytest tests 40 passed before and after (CLAUDE.md still says 26, stale count).
+
+## 2026-09-27 - Server-side logging (tech-debt register #5, logging half)
+
+- `analyzer.py` now logs every Gemini call to the `resume_job_fit_ai.analyzer` logger: schema, attempt, latency in ms, and each 429/5xx retry; `_handle_api_error` logs the real exception class, code and message before the visitor sees the friendly one; the raw-text JSON fallback logs a warning. Resume and job text are never logged.
+- `app.py` configures one stdout handler (Streamlit Cloud collects stdout).
+- Tests: 2 new (a call is logged without the prompt; a failure logs its real cause); `pytest -q` 42 passed. The `app.py` split from the same register item is not done.
