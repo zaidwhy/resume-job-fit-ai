@@ -91,7 +91,9 @@ Then click **Load sample → Analyze fit → Generate all sections ✨** to see 
 
 ```
 resume-job-fit-ai/
-├── app.py                        # Streamlit UI - 7 tabs, Generate All, PDF upload
+├── app.py                        # Streamlit entrypoint - layout, session state, 7 tabs, Generate All, PDF upload
+├── ui_sections.py               # Streamlit panels for each result section
+├── exports.py                    # .txt and .docx download builders (pure, tested)
 ├── analyzer.py                   # All Gemini logic - schemas, prompts, retry, error handling
 ├── requirements.txt
 ├── .env.example                  # GEMINI_API_KEY=your-key-here  (never commit .env)

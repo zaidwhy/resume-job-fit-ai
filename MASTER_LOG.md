@@ -416,3 +416,10 @@ README.md                               # Full feature table, live demo link, ba
 - `analyzer.py` now logs every Gemini call to the `resume_job_fit_ai.analyzer` logger: schema, attempt, latency in ms, and each 429/5xx retry; `_handle_api_error` logs the real exception class, code and message before the visitor sees the friendly one; the raw-text JSON fallback logs a warning. Resume and job text are never logged.
 - `app.py` configures one stdout handler (Streamlit Cloud collects stdout).
 - Tests: 2 new (a call is logged without the prompt; a failure logs its real cause); `pytest -q` 42 passed. The `app.py` split from the same register item is not done.
+
+## 2026-10-04 - app.py split (tech-debt register #5, the split half)
+
+- `app.py` 874 -> 413 lines. The result panels and `chips()` moved verbatim to `ui_sections.py`; the .txt/.docx builders moved verbatim to `exports.py` (no Streamlit, now unit-tested). `app.py` keeps layout, session state and the tabs; entrypoint unchanged (Dockerfile and Streamlit Cloud still run `app.py`).
+- Verified: rendered the old and new `app.py` headlessly (AppTest) in the empty state and a fully populated state, element trees identical (19 and 153 elements, 0 exceptions). pyflakes: same 4 pre-existing warnings, none new.
+- Tests: 6 new (`test_exports.py` x4, `test_app_smoke.py` x2); `pytest tests -q` 48 passed. Breaking one import in `app.py` makes the smoke test fail.
+- `venv/` did not exist on this machine; recreated from requirements.txt (Python 3.14).
