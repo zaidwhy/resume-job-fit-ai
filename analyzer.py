@@ -29,6 +29,7 @@ load_dotenv()
 # gemini-2.5-flash can return 503s under load. Override with GEMINI_MODEL if you prefer.
 MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash-lite")
 MAX_INPUT_CHARS = 8000  # guard against runaway usage; we warn rather than truncate
+MAX_NAME_CHARS = 200    # company name and role on the research page; both go into the prompt verbatim
 _MAX_RETRIES = 3        # auto-retry on transient 5xx / 429s before surfacing an error
 
 
@@ -575,8 +576,10 @@ def research_company(company_name: str, role: str = "") -> CompanyProfile:
     """Research a company and return culture, interview format, and prep tips."""
     if not company_name.strip():
         raise AnalyzerError("Please enter a company name to research.")
-    if len(company_name) > 200:
-        raise AnalyzerError("Company name is too long (200 character limit).")
+    if len(company_name) > MAX_NAME_CHARS:
+        raise AnalyzerError(f"Company name is too long ({MAX_NAME_CHARS} character limit).")
+    if len(role) > MAX_NAME_CHARS:
+        raise AnalyzerError(f"Role is too long ({MAX_NAME_CHARS} character limit).")
     client = _client()
     try:
         response = _generate(client, _build_company_prompt(company_name, role), _COMPANY_SYSTEM, CompanyProfile)

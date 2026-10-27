@@ -1,4 +1,4 @@
-<img src=".github/plate.svg" alt="Resume Job-Fit AI: Scores a resume against a job description, and rewrites without inventing experience. 48 unit tests; Pydantic-validated output; CI on every push. Core strip: 55 commits over 16 weeks, Jun 2026 to Oct 2026." width="100%">
+<img src=".github/plate.svg" alt="Resume Job-Fit AI: Scores a resume against a job description, and rewrites without inventing experience. 49 unit tests; Pydantic-validated output; CI on every push. Core strip: 55 commits over 16 weeks, Jun 2026 to Oct 2026." width="100%">
 
 # Resume Job-Fit AI
 

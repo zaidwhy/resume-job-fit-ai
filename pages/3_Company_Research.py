@@ -12,7 +12,7 @@ from secrets_bridge import load_secrets_into_env
 
 load_secrets_into_env(("GEMINI_API_KEY", "GOOGLE_API_KEY"))
 
-from analyzer import AnalyzerError, CompanyProfile, research_company
+from analyzer import MAX_NAME_CHARS, AnalyzerError, CompanyProfile, research_company
 
 st.set_page_config(
     page_title="Company Research - Resume Job-Fit AI",
@@ -31,11 +31,13 @@ with col_a:
     company_name = st.text_input(
         "Company name",
         placeholder="e.g. Google, Stripe, Shopify, Anthropic…",
+        max_chars=MAX_NAME_CHARS,
     )
 with col_b:
     role = st.text_input(
         "Role (optional)",
         placeholder="e.g. Senior Software Engineer",
+        max_chars=MAX_NAME_CHARS,
     )
 
 research_clicked = st.button("Research company", type="primary")

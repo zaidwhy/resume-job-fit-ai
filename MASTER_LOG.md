@@ -423,3 +423,9 @@ README.md                               # Full feature table, live demo link, ba
 - Verified: rendered the old and new `app.py` headlessly (AppTest) in the empty state and a fully populated state, element trees identical (19 and 153 elements, 0 exceptions). pyflakes: same 4 pre-existing warnings, none new.
 - Tests: 6 new (`test_exports.py` x4, `test_app_smoke.py` x2); `pytest tests -q` 48 passed. Breaking one import in `app.py` makes the smoke test fail.
 - `venv/` did not exist on this machine; recreated from requirements.txt (Python 3.14).
+
+## 2026-10-28 night - role length cap on Company Research
+
+- Audit of input bounds on the public app: every resume and job field is capped at 8,000 characters and the company name at 200, but the optional "Role" on the Company Research page had no limit in the UI or in `research_company`, and it goes into the Gemini prompt verbatim, so one visitor could spend the shared free-tier quota.
+- Fix: `MAX_NAME_CHARS = 200` in analyzer.py, checked for both company name and role before any API call; both page inputs set `max_chars` to it. Test written first (failed before the fix); `pytest tests -q` 49 passed; headless AppTest render of the page: no exceptions, both inputs report max_chars 200.
+- Not verified: the deployed app (Streamlit Cloud redeploys from main on push).

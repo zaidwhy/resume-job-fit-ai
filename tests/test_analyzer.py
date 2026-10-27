@@ -350,6 +350,12 @@ class TestResearchCompany:
         with pytest.raises(AnalyzerError, match="company name"):
             research_company("   ")
 
+    def test_raises_on_overlong_role_before_any_api_call(self):
+        # The role goes into the prompt verbatim; uncapped, one visitor could spend the
+        # shared free-tier quota on a pasted novel.
+        with pytest.raises(AnalyzerError, match="Role is too long"):
+            research_company("Acme", "x" * 201)
+
 
 class TestLogging:
     """The server log records each model call and the real cause of a failure, never the inputs."""
