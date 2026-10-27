@@ -1,3 +1,5 @@
+<img src=".github/plate.svg" alt="Resume Job-Fit AI: Scores a resume against a job description, and rewrites without inventing experience. 48 unit tests; Pydantic-validated output; CI on every push. Core strip: 55 commits over 16 weeks, Jun 2026 to Oct 2026." width="100%">
+
 # Resume Job-Fit AI
 
 Paste a **job description** and your **resume** (or upload a PDF) → get an instant **fit score**, **salary range estimate**, **keywords you're missing**, **AI-rewritten bullet diff viewer**, a **tailored cover letter** (3 tones), **interview prep**, a **skills gap roadmap**, **LinkedIn optimizer**, **email templates**, and a **standalone resume health check** - all in one click.
@@ -168,3 +170,7 @@ resume-job-fit-ai/
 
 *Built in public by **Zaid Ali Syed** · [github.com/zaidwhy](https://github.com/zaidwhy)*
 *Rewrites stay truthful to your resume - review before using.*
+
+---
+
+<sub>One plate from the survey at [github.com/zaidwhy](https://github.com/zaidwhy). The strip on the plate above is this repository's own commit history, one band per week.</sub>
